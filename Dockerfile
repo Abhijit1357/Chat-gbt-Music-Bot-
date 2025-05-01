@@ -1,21 +1,16 @@
-# Use slim Python image
 FROM python:3.10-slim
 
-# Set working directory
 WORKDIR /app
 
-# Install dependencies
 COPY requirements.txt .
+
 RUN apt-get update && \
-    apt-get install -y ffmpeg gcc libffi-dev libssl-dev && \
-    pip install --no-cache-dir -r requirements.txt && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    ffmpeg gcc libffi-dev libssl-dev build-essential git curl && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Copy bot files
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . .
 
-# Expose port (for Koyeb)
-EXPOSE 8080
-
-# Run the bot
 CMD ["python", "bot.py"]
