@@ -7,7 +7,7 @@ load_dotenv()
 # Telegram API details
 API_ID = os.getenv('API_ID', '22834593')  # Replace with your API_ID
 API_HASH = os.getenv('API_HASH', 'f400bc1d1baeb9ae93014ce3ee5ea835')  # Replace with your API_HASH
-BOT_TOKEN = os.getenv('BOT_TOKEN', '6666555316:AAHT6ObREaHwIsowFiH2UFd6kkSaRfFFiQs')  # Replace with your BOT_TOKEN
+BOT_TOKEN = os.getenv('BOT_TOKEN', '6666555316:AAHceKIrzstqqHpwODYWiosOSr6n4UEfCw4')  # Replace with your BOT_TOKEN
 
 # Logger ID (for logging messages in channels/groups)
 LOGGER_ID = os.getenv('LOGGER_ID', '-1002134425165')  # Replace with your Logger Channel ID
