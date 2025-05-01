@@ -1,5 +1,6 @@
 python-telegram-bot
 yt-dlp
-flask
+selenium
+webdriver-manager
 ffmpeg-python
 python-dotenv
