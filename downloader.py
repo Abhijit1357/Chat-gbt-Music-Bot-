@@ -1,29 +1,25 @@
 import yt_dlp
-import tempfile
 import os
+import uuid
 
 async def download_song(song_query: str):
-    # Use yt-dlp to search and download the song asynchronously
+    # Generate a unique temp file path
+    safe_filename = str(uuid.uuid4())  # Safe, random filename
+    temp_file_path = f"/tmp/{safe_filename}.mp3"
+
     ydl_opts = {
-        'format': 'bestaudio/best',  # Best audio quality
+        'format': 'bestaudio/best',
+        'outtmpl': temp_file_path,
+        'quiet': True,
+        'default_search': 'ytsearch',
         'postprocessors': [{
-            'key': 'FFmpegAudioConvertor',
-            'preferredcodec': 'mp3',  # Convert to MP3 format
+            'key': 'FFmpegExtractAudio',  # Correct key
+            'preferredcodec': 'mp3',
             'preferredquality': '192',
         }],
-        'quiet': True,
     }
 
-    # Ensure the query is a search query if not a valid URL
-    if not song_query.startswith("ytsearch:"):
-        song_query = f"ytsearch:{song_query}"
-
-    # Using a temporary file to store the downloaded song
-    temp_file_path = os.path.join('/tmp', f'{song_query}.mp3')
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info_dict = ydl.extract_info(song_query, download=True)
-        video_url = info_dict.get("url", None)
-        if video_url:
-            ydl.download([song_query])
+        ydl.download([song_query])  # Automatically handles ytsearch and URL both
 
     return temp_file_path
